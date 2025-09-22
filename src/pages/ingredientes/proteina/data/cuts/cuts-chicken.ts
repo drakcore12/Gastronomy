@@ -1,0 +1,268 @@
+export const CUTS_CHICKEN = [
+
+  // ============================================================================
+  // PRIMAL: BREAST / PECHUGA
+  // ============================================================================
+  {
+    id: 'chicken-breast',
+    nombre: 'Pechuga',
+    alias: ['Breast'],
+    primal: { id: 'breast', en: 'Breast', es: 'Pechuga' },
+    especie: 'pollo',
+    metodos: ['Parrilla', 'Plancha', 'Sartén'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Magro, muy versátil.',
+    descripcion: 'Parte magra delantera, carne blanca muy popular en cocina saludable.',
+    tips: 'No sobrecocinar, se reseca fácilmente.',
+  },
+  {
+    id: 'chicken-supreme',
+    nombre: 'Suprema de pechuga',
+    alias: ['Supreme breast fillet'],
+    primal: { id: 'breast', en: 'Breast', es: 'Pechuga' },
+    especie: 'pollo',
+    metodos: ['Sartén', 'Plancha', 'Rebozado'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Magro y delicado.',
+    descripcion: 'Pechuga deshuesada y sin piel, lista para cocinar.',
+    tips: 'Ideal para empanizar o saltear en tiras.',
+  },
+  {
+    id: 'chicken-tenderloin',
+    nombre: 'Solomillo de pollo',
+    alias: ['Tenderloin', 'Pollo fino'],
+    primal: { id: 'breast', en: 'Breast', es: 'Pechuga' },
+    especie: 'pollo',
+    metodos: ['Saltear', 'Freír', 'Plancha'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Muy tierno.',
+    descripcion: 'Pequeña franja de carne interna de la pechuga, muy tierna.',
+    tips: 'Perfecto para nuggets o tiras.',
+  },
+
+  // ============================================================================
+  // PRIMAL: WING / ALA
+  // ============================================================================
+  {
+    id: 'chicken-wing',
+    nombre: 'Ala',
+    alias: ['Wing'],
+    primal: { id: 'wing', en: 'Wing', es: 'Ala' },
+    especie: 'pollo',
+    metodos: ['Frito', 'Parrilla', 'Horno'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Carnoso con piel crujiente.',
+    descripcion: 'Incluye hueso y piel, muy popular en frituras y salsas.',
+    tips: 'Marinar antes de hornear o freír.',
+  },
+  {
+    id: 'chicken-drumette',
+    nombre: 'Drumette (parte superior del ala)',
+    alias: ['Drumette'],
+    primal: { id: 'wing', en: 'Wing', es: 'Ala' },
+    especie: 'pollo',
+    metodos: ['Frito', 'BBQ'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Semejante a un mini muslo.',
+    descripcion: 'Segmento carnoso más cercano al cuerpo.',
+    tips: 'Perfecto para alitas estilo buffalo.',
+  },
+  {
+    id: 'chicken-flat',
+    nombre: 'Flat (media del ala)',
+    alias: ['Flat', 'Wingette'],
+    primal: { id: 'wing', en: 'Wing', es: 'Ala' },
+    especie: 'pollo',
+    metodos: ['Frito', 'Horno'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Equilibrado en carne y piel.',
+    descripcion: 'Segmento medio del ala con dos huesos delgados.',
+    tips: 'Crujiente ideal en frituras.',
+  },
+  {
+    id: 'chicken-tip',
+    nombre: 'Punta de ala',
+    alias: ['Wing tip'],
+    primal: { id: 'wing', en: 'Wing', es: 'Ala' },
+    especie: 'pollo',
+    metodos: ['Caldo'],
+    grasa: 'alta',
+    proteina: 'baja',
+    perfil: 'Piel y hueso.',
+    descripcion: 'Segmento final, casi sin carne, usado en fondos y caldos.',
+    tips: 'No se consume solo, ideal para sopas.',
+  },
+
+  // ============================================================================
+  // PRIMAL: LEG / PIERNA
+  // ============================================================================
+  {
+    id: 'chicken-leg',
+    nombre: 'Pierna',
+    alias: ['Leg', 'Drumstick'],
+    primal: { id: 'leg', en: 'Leg', es: 'Pierna' },
+    especie: 'pollo',
+    metodos: ['Parrilla', 'Frito', 'Horno'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Carnoso, jugoso.',
+    descripcion: 'Parte inferior de la pata, con hueso largo.',
+    tips: 'Perfecto para freír o asar.',
+  },
+  {
+    id: 'chicken-quarter',
+    nombre: 'Cuarto trasero',
+    alias: ['Leg quarter'],
+    primal: { id: 'leg', en: 'Leg', es: 'Pierna' },
+    especie: 'pollo',
+    metodos: ['Asado', 'Estofado'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Incluye muslo y pierna juntos.',
+    descripcion: 'Corte grande que une muslo y pierna.',
+    tips: 'Ideal para hornos y guisos familiares.',
+  },
+
+  // ============================================================================
+  // PRIMAL: THIGH / MUSLO
+  // ============================================================================
+  {
+    id: 'chicken-thigh',
+    nombre: 'Muslo',
+    alias: ['Thigh'],
+    primal: { id: 'thigh', en: 'Thigh', es: 'Muslo' },
+    especie: 'pollo',
+    metodos: ['Estofar', 'Asado', 'Parrilla'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Carne oscura, muy jugosa.',
+    descripcion: 'Parte superior de la pierna, más carnosa que la pechuga.',
+    tips: 'Excelente para guisos y BBQ.',
+  },
+  {
+    id: 'chicken-thigh-boneless',
+    nombre: 'Muslo deshuesado',
+    alias: ['Boneless thigh'],
+    primal: { id: 'thigh', en: 'Thigh', es: 'Muslo' },
+    especie: 'pollo',
+    metodos: ['Saltear', 'Plancha'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Muy jugoso.',
+    descripcion: 'Versátil, se usa en kebabs, wok y rellenos.',
+    tips: 'Excelente para comidas rápidas.',
+  },
+
+  // ============================================================================
+  // PRIMAL: NECK / CUELLO
+  // ============================================================================
+  {
+    id: 'chicken-neck',
+    nombre: 'Cuello',
+    alias: ['Neck'],
+    primal: { id: 'neck', en: 'Neck', es: 'Cuello' },
+    especie: 'pollo',
+    metodos: ['Caldos', 'Sopas'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Carnoso con hueso.',
+    descripcion: 'Ideal para fondos y sopas.',
+    tips: 'Combina bien con menudencias.',
+  },
+
+  // ============================================================================
+  // PRIMAL: BACK / ESPALDA
+  // ============================================================================
+  {
+    id: 'chicken-back',
+    nombre: 'Espalda',
+    alias: ['Back'],
+    primal: { id: 'back', en: 'Back', es: 'Espalda' },
+    especie: 'pollo',
+    metodos: ['Caldos', 'Sopas'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Con hueso, aporta mucho sabor.',
+    descripcion: 'Usada para caldos y fondos de pollo.',
+    tips: 'Aporta gelatina y sabor a las sopas.',
+  },
+
+  // ============================================================================
+  // PRIMAL: TAIL / COLA
+  // ============================================================================
+  {
+    id: 'chicken-tail',
+    nombre: 'Cola',
+    alias: ['Tail', 'Parson’s nose'],
+    primal: { id: 'tail', en: 'Tail', es: 'Cola' },
+    especie: 'pollo',
+    metodos: ['Asado', 'Caldos'],
+    grasa: 'alta',
+    proteina: 'baja',
+    perfil: 'Muy graso.',
+    descripcion: 'Pequeña parte final, muy grasa y sabrosa.',
+    tips: 'Se usa en sopas o frituras pequeñas.',
+  },
+
+  // ============================================================================
+  // PRIMAL: OFFAL / VÍSCERAS
+  // ============================================================================
+  {
+    id: 'chicken-gizzard',
+    nombre: 'Molleja',
+    alias: ['Gizzard'],
+    primal: { id: 'offal', en: 'Offal', es: 'Vísceras' },
+    especie: 'pollo',
+    metodos: ['Estofar', 'Frito'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Fibroso y muy sabroso.',
+    descripcion: 'Órgano muscular usado en guisos y frituras.',
+    tips: 'Requiere cocciones largas o fritura fuerte.',
+  },
+  {
+    id: 'chicken-heart',
+    nombre: 'Corazón',
+    alias: ['Heart'],
+    primal: { id: 'offal', en: 'Offal', es: 'Vísceras' },
+    especie: 'pollo',
+    metodos: ['Brochetas', 'Salteado'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Intenso y sabroso.',
+    descripcion: 'Se suele usar en brochetas o guisos.',
+    tips: 'Marinar previamente para suavizar.',
+  },
+  {
+    id: 'chicken-liver',
+    nombre: 'Hígado',
+    alias: ['Liver'],
+    primal: { id: 'offal', en: 'Offal', es: 'Vísceras' },
+    especie: 'pollo',
+    metodos: ['Salteado', 'Paté'],
+    grasa: 'alta',
+    proteina: 'media',
+    perfil: 'Intenso y cremoso.',
+    descripcion: 'Muy usado en patés y rellenos.',
+    tips: 'No sobrecocinar para evitar amargor.',
+  },
+  {
+    id: 'chicken-feet',
+    nombre: 'Patas de pollo',
+    alias: ['Chicken feet'],
+    primal: { id: 'offal', en: 'Offal', es: 'Vísceras' },
+    especie: 'pollo',
+    metodos: ['Sopas', 'Guisos'],
+    grasa: 'alta',
+    proteina: 'media',
+    perfil: 'Muy colagenoso.',
+    descripcion: 'Rico en colágeno, usado en sopas y guisos tradicionales.',
+    tips: 'Requiere cocciones largas.',
+  },
+];

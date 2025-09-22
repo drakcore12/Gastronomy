@@ -1,0 +1,213 @@
+export const CUTS_FISH = [
+  // ==========================================================================
+  // PRIMAL: HEAD / CABEZA
+  // ==========================================================================
+  {
+    id: 'head',
+    nombre: 'Cabeza',
+    alias: ['Head (EN)', 'Kabuto (JP)', 'Cabeza (ES/CO)'],
+    primal: { id: 'head', en: 'Head', es: 'Cabeza' },
+    especie: 'pescado',
+    metodos: ['Caldo', 'Horno', 'Parrilla', 'Curry/Guiso'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Gelatinoso, mucho colágeno y sabor',
+    descripcion:
+      'Incluye mejillas, mandíbula y partes gelatinosas. Excelente para caldos y asados.',
+    tips: 'Asar o brasear para soltar colágeno; ideal partir en mitades.',
+  },
+  {
+    id: 'cheeks',
+    nombre: 'Mejillas',
+    alias: ['Cheeks (EN)', 'Kama-niku (JP)', 'Carrillos (ES)', 'Cachetes (CO)'],
+    primal: { id: 'head', en: 'Head', es: 'Cabeza' },
+    especie: 'pescado',
+    metodos: ['Plancha', 'Parrilla', 'Sartén'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Tiernas, muy jugosas',
+    descripcion: 'Músculo de la cara. Uno de los bocados más apreciados.',
+    tips: 'Sellado rápido y reposo corto para conservar jugos.',
+  },
+  {
+    id: 'nape',
+    nombre: 'Cogote / Nuca',
+    alias: ['Nape (EN)', 'Kashira-ura (JP)', 'Cogote (ES/CO)'],
+    primal: { id: 'head', en: 'Head', es: 'Cabeza' },
+    especie: 'pescado',
+    metodos: ['Parrilla', 'Horno', 'Caldo'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Súper sabroso, con espinas y gelatina',
+    descripcion: 'Zona entre cabeza y lomo; ideal para asar o fondo.',
+    tips: 'Asar con piel para que no se deshaga.',
+  },
+
+  // ==========================================================================
+  // PRIMAL: COLLAR / KAMA
+  // ==========================================================================
+  {
+    id: 'kama',
+    nombre: 'Collar',
+    alias: ['Collar (EN)', 'Kama (JP)', 'Collar (ES/CO)'],
+    primal: { id: 'kama', en: 'Collar', es: 'Collar' },
+    especie: 'pescado',
+    metodos: ['Parrilla', 'Horno', 'Ahumado'],
+    grasa: 'media',
+    proteina: 'alta',
+    perfil: 'Carnoso, con piel y grasa subcutánea',
+    descripcion: 'Sección junto a las aletas pectorales; muy popular.',
+    tips: 'Sal gruesa y parrilla/horno fuerte; terminar con limón.',
+  },
+
+  // ==========================================================================
+  // PRIMAL: LOIN / LOMO (DORSAL)
+  // ==========================================================================
+  {
+    id: 'back_loin',
+    nombre: 'Lomo dorsal',
+    alias: ['Back Loin (EN)', 'Akami (JP)', 'Lomo dorsal (ES/CO)'],
+    primal: { id: 'back', en: 'Back Loin', es: 'Lomo dorsal' },
+    especie: 'pescado',
+    metodos: ['Crudo', 'Plancha', 'Horno suave'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Magro, corte principal',
+    descripcion: 'Lomo superior, fibra firme y sabor limpio.',
+    tips: 'No sobrecocer; sellado breve o crudo.',
+  },
+
+  // ==========================================================================
+  // PRIMAL: BELLY / VIENTRE (VENTRESCA)
+  // ==========================================================================
+  {
+    id: 'belly',
+    nombre: 'Vientre / Ventresca',
+    alias: ['Belly (EN)', 'Hara/Toro (JP)', 'Ventresca (ES)', 'Barriga (CO)'],
+    primal: { id: 'abdomen', en: 'Belly', es: 'Vientre' },
+    especie: 'pescado',
+    metodos: ['Crudo', 'Parrilla', 'Plancha', 'Ahumado'],
+    grasa: 'alta',
+    proteina: 'alta',
+    perfil: 'Mantecoso, muy graso',
+    descripcion: 'Zona ventral, con mucha grasa. Muy valorada.',
+    tips: 'Ideal crudo o baja cocción.',
+  },
+  {
+    id: 'belly_flap',
+    nombre: 'Falda abdominal',
+    alias: ['Belly Flap (EN)', 'Haraniku (JP)', 'Falda (ES)', 'Abanico (CO)'],
+    primal: { id: 'abdomen', en: 'Belly', es: 'Vientre' },
+    especie: 'pescado',
+    metodos: ['Parrilla', 'Frito', 'Ahumado'],
+    grasa: 'alta',
+    proteina: 'media',
+    perfil: 'Graso, con piel',
+    descripcion: 'Extensión del vientre con piel y grasa.',
+    tips: 'Marinar breve y parrilla fuerte.',
+  },
+
+  // ==========================================================================
+  // PRIMAL: TAIL / COLA
+  // ==========================================================================
+  {
+    id: 'tail_meat',
+    nombre: 'Carne de cola',
+    alias: ['Tail Meat (EN)', 'O (JP)', 'Carne de cola (ES/CO)'],
+    primal: { id: 'tail', en: 'Tail Meat', es: 'Carne de cola' },
+    especie: 'pescado',
+    metodos: ['Plancha', 'Parrilla', 'Frito'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Magro, fibras marcadas',
+    descripcion: 'Sección final del lomo. Útil para tiras, tacos o frituras.',
+    tips: 'Cortes finos y cocción corta.',
+  },
+  {
+    id: 'tail',
+    nombre: 'Cola',
+    alias: ['Tail (EN)', 'O-hire (JP)', 'Cola (ES/CO)'],
+    primal: { id: 'tail', en: 'Tail', es: 'Cola' },
+    especie: 'pescado',
+    metodos: ['Caldo', 'Frito', 'Parrilla'],
+    grasa: 'baja',
+    proteina: 'media',
+    perfil: 'Cartilaginoso',
+    descripcion: 'Aleta y base, aporta gelatina a caldos.',
+    tips: 'Ideal para fondos o frituras crujientes.',
+  },
+
+  // ==========================================================================
+  // OFFAL / VÍSCERAS
+  // ==========================================================================
+  {
+    id: 'liver',
+    nombre: 'Hígado',
+    alias: ['Liver (EN)', 'Ankimo (JP)', 'Hígado (ES/CO)'],
+    primal: { id: 'offal', en: 'Offal', es: 'Víceras' },
+    especie: 'pescado',
+    metodos: ['Vapor', 'Terrina', 'Plancha suave'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Untuoso, delicado',
+    descripcion: 'Muy apreciado en rape (ankimo).',
+    tips: 'Curar con sal/sake, luego vapor.',
+  },
+  {
+    id: 'heart',
+    nombre: 'Corazón',
+    alias: ['Heart (EN)', 'Shinzou (JP)', 'Corazón (ES/CO)'],
+    primal: { id: 'offal', en: 'Offal', es: 'Víceras' },
+    especie: 'pescado',
+    metodos: ['Salteado rápido', 'Plancha'],
+    grasa: 'baja',
+    proteina: 'alta',
+    perfil: 'Magro, sabor intenso',
+    descripcion: 'Pequeño y firme; se usa en brochetas o salteados.',
+    tips: 'Cocción breve para evitar dureza.',
+  },
+  {
+    id: 'swim_bladder',
+    nombre: 'Vejiga natatoria',
+    alias: [
+      'Swim Bladder (EN)',
+      'Fukuro (JP)',
+      'Vejiga natatoria (ES/CO)',
+      'Buchaca (CO)',
+    ],
+    primal: { id: 'offal', en: 'Offal', es: 'Víceras' },
+    especie: 'pescado',
+    metodos: ['Sopa', 'Gelatina', 'Secado'],
+    grasa: 'baja',
+    proteina: 'media',
+    perfil: 'Rica en colágeno',
+    descripcion: 'Usada seca en sopas; aporta cuerpo y textura.',
+    tips: 'Hidratar/ablandar antes de cocción.',
+  },
+  {
+    id: 'roe',
+    nombre: 'Huevas',
+    alias: ['Roe (EN)', 'Ikura/Tarako (JP)', 'Huevas (ES/CO)'],
+    primal: { id: 'offal', en: 'Roe', es: 'Huevas' },
+    especie: 'pescado',
+    metodos: ['Curado', 'Ahumado', 'Salmuera'],
+    grasa: 'alta',
+    proteina: 'media',
+    perfil: 'Salinas, explosivas',
+    descripcion: 'Huevos sueltos o en saco según especie.',
+    tips: 'Salmuera controlada y frío constante.',
+  },
+  {
+    id: 'milt',
+    nombre: 'Leche (milt)',
+    alias: ['Milt (EN)', 'Shirako (JP)', 'Leche (ES/CO)'],
+    primal: { id: 'offal', en: 'Milt', es: 'Leche' },
+    especie: 'pescado',
+    metodos: ['Tempura', 'Plancha suave', 'Vapor'],
+    grasa: 'media',
+    proteina: 'media',
+    perfil: 'Cremoso y delicado',
+    descripcion: 'Gónadas masculinas. Textura sedosa muy apreciada.',
+    tips: 'Cocciones cortas y suaves.',
+  },
+];

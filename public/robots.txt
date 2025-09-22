@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://gastronomia-profesional.com/sitemap.xml
+
+# Crawl-delay para evitar sobrecarga del servidor
+Crawl-delay: 1
+
+# Bloquear archivos innecesarios
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.json$
+Disallow: /vite.config.js
+Disallow: /tsconfig.json
+Disallow: /tailwind.config.js
+Disallow: /postcss.config.js
+
+# Permitir archivos importantes
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /og-image.jpg
