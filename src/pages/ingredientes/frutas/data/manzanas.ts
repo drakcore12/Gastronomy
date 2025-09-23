@@ -21,7 +21,7 @@ export const MANZANAS: Fruta[] = [
       antioxidantes: 'Quercetina'
     },
     tips: 'Excelente para tartas por su acidez, mantiene la forma al hornear.',
-    imagen: '/images/frutas/manzana-granny-smith.jpg',
+    imagen: '/images/frutas/manzana-granny-smith.png',
     color: 'from-green-500 to-lime-500',
     descripcion: 'Manzana verde, ácida y refrescante, muy usada en repostería.'
   },
@@ -45,7 +45,7 @@ export const MANZANAS: Fruta[] = [
       antioxidantes: 'Catequinas'
     },
     tips: 'Una de las más dulces, ideal para comer cruda.',
-    imagen: '/images/frutas/manzana-fuji.jpg',
+    imagen: '/images/frutas/manzana-fuji.png',
     color: 'from-red-500 to-yellow-400',
     descripcion: 'Variedad japonesa muy dulce y jugosa, perfecta para consumo directo.'
   },
@@ -69,7 +69,7 @@ export const MANZANAS: Fruta[] = [
       antioxidantes: 'Flavonoides'
     },
     tips: 'Buen equilibrio entre dulzura y jugosidad, se oxida más lentamente.',
-    imagen: '/images/frutas/manzana-gala.jpg',
+    imagen: '/images/frutas/manzana-gala.png',
     color: 'from-orange-500 to-red-500',
     descripcion: 'Variedad suave y aromática, muy consumida fresca.'
   }

@@ -8,7 +8,12 @@ import {
   Droplets,
   BookOpen,
   Hammer,
-  Wrench
+  Wrench,
+  Amphora,
+  Bean,
+  CookingPot,
+  Refrigerator,
+  UtensilsCrossed
 } from 'lucide-react';
 import { PageInfo, PageKey } from './types';
 
@@ -29,7 +34,7 @@ export const MAIN_CATEGORIES = [
   {
     id: 'ingredientes',
     name: 'Ingredientes',
-    icon: Beef,
+    icon: Refrigerator,
     color: 'bg-blue-50 text-blue-600 hover:bg-blue-100',
     page: 'ingredientes' as PageKey,
     subcategories: [
@@ -64,9 +69,17 @@ export const MAIN_CATEGORIES = [
   {
     id: 'tecnicas',
     name: 'Técnicas',
-    icon: Hammer,
+    icon: UtensilsCrossed,
     color: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100',
     page: 'tecnicas' as PageKey,
+    subcategories: []
+  },
+  {
+    id: 'herramientas',
+    name: 'Herramientas',
+    icon: CookingPot,
+    color: 'bg-gray-50 text-gray-600 hover:bg-gray-100',
+    page: 'herramientas' as PageKey,
     subcategories: []
   },
   {
@@ -88,8 +101,8 @@ export const PAGE_MAP: Record<PageKey, PageInfo> = {
   frutas: { name: 'Frutas', icon: Apple, color: 'bg-yellow-600', lightColor: 'bg-yellow-50' },
   especias: { name: 'Especias', icon: Award, color: 'bg-purple-600', lightColor: 'bg-purple-50' },
   harinas: { name: 'Harinas', icon: Wheat, color: 'bg-amber-600', lightColor: 'bg-amber-50' },
-  aceites: { name: 'Aceites', icon: Droplets, color: 'bg-blue-600', lightColor: 'bg-blue-50' },
-  legumbres: { name: 'Legumbres', icon: Wheat, color: 'bg-green-600', lightColor: 'bg-green-50' },
+  aceites: { name: 'Aceites', icon: Amphora, color: 'bg-blue-600', lightColor: 'bg-blue-50' },
+  legumbres: { name: 'Legumbres', icon: Bean, color: 'bg-green-600', lightColor: 'bg-green-50' },
   recetas: { name: 'Recetas', icon: BookOpen, color: 'bg-pink-600', lightColor: 'bg-pink-50' },
   arroces: { name: 'Arroces', icon: BookOpen, color: 'bg-yellow-600', lightColor: 'bg-yellow-50' },
   bebidas: { name: 'Bebidas', icon: BookOpen, color: 'bg-blue-600', lightColor: 'bg-blue-50' },
@@ -101,7 +114,7 @@ export const PAGE_MAP: Record<PageKey, PageInfo> = {
   salsas: { name: 'Salsas', icon: BookOpen, color: 'bg-orange-600', lightColor: 'bg-orange-50' },
   sopas: { name: 'Sopas', icon: BookOpen, color: 'bg-blue-600', lightColor: 'bg-blue-50' },
   tapas: { name: 'Tapas', icon: BookOpen, color: 'bg-purple-600', lightColor: 'bg-purple-50' },
-  tecnicas: { name: 'Técnicas', icon: Hammer, color: 'bg-indigo-600', lightColor: 'bg-indigo-50' },
-  herramientas: { name: 'Herramientas', icon: Wrench, color: 'bg-gray-600', lightColor: 'bg-gray-50' },
+  tecnicas: { name: 'Técnicas', icon: UtensilsCrossed, color: 'bg-indigo-600', lightColor: 'bg-indigo-50' },
+  herramientas: { name: 'Herramientas', icon: CookingPot, color: 'bg-gray-600', lightColor: 'bg-gray-50' },
   examen: { name: 'Examen', icon: Award, color: 'bg-red-600', lightColor: 'bg-red-50' }
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Beef } from 'lucide-react';
 import { PageKey } from '../types';
 import { useHeaderNavigation } from '../hooks';
 
@@ -21,18 +20,23 @@ export function Logo({ isScrolled, onNavigate }: LogoProps) {
       <div
         className={`
           flex h-10 w-10 items-center justify-center rounded-xl 
-          bg-gradient-to-br from-orange-500 to-orange-600 text-white
+          text-white
           transition-all duration-500 transform
           ${isScrolled ? 'scale-90' : 'scale-100'}
           group-hover:scale-110 group-hover:shadow-lg
         `}
+        style={{ backgroundColor: '#ff751f' }}
         aria-hidden="true"
       >
-        <Beef className="h-6 w-6" />
+        <img 
+          src="/favicon.svg" 
+          alt="Logo Gastronomía Profesional" 
+          className="h-18 w-18"
+        />
       </div>
       <div className={`transition-all duration-500 ${isScrolled ? 'opacity-80' : 'opacity-100'}`}>
-        <h1 className="font-bold tracking-tight text-xl text-slate-900 group-hover:text-orange-600 transition-colors">
-          Gastronomía Profesional
+        <h1 className="font-bold tracking-tight text-xl text-slate-900 group-hover:text-[#ff751f] transition-colors">
+          Gastronomy
         </h1>
         <p className={`text-sm text-slate-500 transition-all duration-300 ${isScrolled ? 'opacity-0 h-0' : 'opacity-100 h-auto'}`}>
           Aprender cocinando

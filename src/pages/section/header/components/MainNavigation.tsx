@@ -28,7 +28,7 @@ export function MainNavigation({ showCategories, onNavigate, currentPage }: Main
               transition-all duration-300 ease-out transform
               ${isActive 
                 ? `${info.lightColor} text-slate-900 scale-105 shadow-sm` 
-                : 'text-slate-600 hover:text-orange-600 hover:bg-orange-50 hover:scale-105'
+                : 'text-slate-600 hover:scale-105 hover:text-[#ff751f] hover:bg-[#fff5f0]'
               }
             `}
           >
@@ -37,7 +37,7 @@ export function MainNavigation({ showCategories, onNavigate, currentPage }: Main
               {info.name}
             </span>
             {isActive && (
-              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-orange-600 rounded-full" />
+              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-0.5 rounded-full" style={{ backgroundColor: '#ff751f' }} />
             )}
           </button>
         );

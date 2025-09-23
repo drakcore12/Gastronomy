@@ -16,7 +16,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Smoothie', 'Pan de plátano', 'Frituras', 'Helado'],
     nutricion: { kcal: 89, fibra: 2.6, vitaminaC: 8.7, antioxidantes: 'Dopamina, Catequinas' },
     tips: 'Maduro es más dulce, verde más almidonado.',
-    imagen: '/images/frutas/platano-cavendish.jpg',
+    imagen: '/images/frutas/platano-cavendish.png',
     descripcion: 'La variedad más común en el mundo, versátil y energética.',
     color: 'from-yellow-400 to-yellow-500'
   },
@@ -35,7 +35,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Patacones', 'Tajadas fritas', 'Sopas'],
     nutricion: { kcal: 122, fibra: 2.3, vitaminaC: 18, antioxidantes: 'Fenoles' },
     tips: 'Se consume mejor cocinado, ideal para preparaciones saladas.',
-    imagen: '/images/frutas/platano-macho.jpg',
+    imagen: '/images/frutas/platano-macho.png',
     descripcion: 'Grande y harinoso, base de muchas recetas latinas.',
     color: 'from-green-600 to-yellow-600'
   },
@@ -54,7 +54,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Postres frescos', 'Jugos', 'Helados'],
     nutricion: { kcal: 90, fibra: 2.4, vitaminaC: 9, antioxidantes: 'Carotenoides' },
     tips: 'Pequeño y dulce, ideal para niños y postres frescos.',
-    imagen: '/images/frutas/platano-manzano.jpg',
+    imagen: '/images/frutas/platano-manzano.png',
     descripcion: 'Plátano pequeño y aromático, con sabor que recuerda a manzana.',
     color: 'from-yellow-500 to-red-400'
   },
@@ -92,7 +92,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Frituras', 'Postres cocidos'],
     nutricion: { kcal: 95, fibra: 2.5, vitaminaC: 9.5, antioxidantes: 'Fenoles' },
     tips: 'Más corto y ancho, combina dulzor y acidez.',
-    imagen: '/images/frutas/platano-burro.jpg',
+    imagen: '/images/frutas/platano-burro.png',
     descripcion: 'Variedad latina, usada tanto en recetas dulces como saladas.',
     color: 'from-yellow-500 to-green-500'
   },
@@ -111,7 +111,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Postres frescos', 'Snacks'],
     nutricion: { kcal: 88, fibra: 2.3, vitaminaC: 8, antioxidantes: 'Flavonoides' },
     tips: 'Excelente como snack natural, muy apreciado por su tamaño.',
-    imagen: '/images/frutas/platano-dominico.jpg',
+    imagen: '/images/frutas/platano-dominico.png',
     descripcion: 'Banana miniatura muy dulce, típica de México y Centroamérica.',
     color: 'from-yellow-400 to-amber-500'
   },
@@ -130,7 +130,7 @@ export const PLATANOS: Fruta[] = [
     preparaciones: ['Helados naturales', 'Batidos cremosos'],
     nutricion: { kcal: 100, fibra: 2.7, vitaminaC: 9, antioxidantes: 'Polifenoles' },
     tips: 'Conocido como "banana helado", ideal para recetas veganas.',
-    imagen: '/images/frutas/platano-blue-java.jpg',
+    imagen: '/images/frutas/platano-blue-java.png',
     descripcion: 'Plátano azul-grisáceo, con pulpa cremosa y sabor a vainilla.',
     color: 'from-blue-400 to-indigo-500'
   }

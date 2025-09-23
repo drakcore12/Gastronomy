@@ -130,8 +130,8 @@ export function MobileMenuContent({ currentPage, onNavigate, onClose }: MobileMe
                           w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left
                           transition-all duration-200 transform
                           ${isSubActive 
-                            ? 'bg-blue-100 text-blue-700 shadow-sm scale-105' 
-                            : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50 hover:scale-105'
+                            ? 'bg-[#fff5f0] text-[#ff751f] shadow-sm scale-105' 
+                            : 'text-slate-600 hover:text-[#ff751f] hover:bg-[#fff5f0] hover:scale-105'
                           }
                         `}
                         style={{
@@ -146,7 +146,7 @@ export function MobileMenuContent({ currentPage, onNavigate, onClose }: MobileMe
                           )}
                         </div>
                         {isSubActive && (
-                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          <div className="w-2 h-2 bg-[#ff751f] rounded-full"></div>
                         )}
                       </a>
                     );

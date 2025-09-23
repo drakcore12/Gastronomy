@@ -425,11 +425,12 @@ export default function GoatDiagram() {
                 style={{ pointerEvents: HIT_POINTER_EVENTS }}
               />
 
-              {/* Punto visible */}
-              <circle
-                cx={h.x}
-                cy={h.y}
-                r={rDot}
+              {/* Número del hotspot con estilo del punto */}
+              <text
+                x={h.x}
+                y={h.y + 0.5}
+                textAnchor="middle"
+                dominantBaseline="middle"
                 className={DOT_CLASS_TRANSITION}
                 fill={
                   isActive
@@ -437,7 +438,14 @@ export default function GoatDiagram() {
                     : DOT_FILL_INACTIVE
                 }
                 filter={`url(#${DOT_GLOW_SOFT_ID})`}
-              />
+                style={{
+                  fontSize: 'clamp(8px, 1.5vw, 10px)',
+                  fontWeight: 'bold',
+                  textShadow: isActive ? '0 0 1px rgba(0,0,0,0.6)' : '0 0 0.5px rgba(255,255,255,0.9)'
+                }}
+              >
+                {HOTSPOTS_GOAT.findIndex(spot => spot.id === h.id) + 1}
+              </text>
 
               {/* Anillo base */}
               <circle

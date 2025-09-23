@@ -34,7 +34,7 @@ export default defineConfig({
     port: 3000,
     open: true,
     allowedHosts: [
-      'techno-netscape-administrator-montreal.trycloudflare.com', // ✅ Host de Cloudflare Tunnel
+      'reducing-expense-beginning-exhaust.trycloudflare.com', // ✅ Host de Cloudflare Tunnel
     ],
   },
   // Pre-bundling para dependencias

@@ -74,7 +74,7 @@ export default function Header({
                           transition-all duration-200
                           ${isActive 
                             ? `${category.color} shadow-sm` 
-                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                            : 'text-slate-600 hover:text-[#ff751f] hover:bg-[#fff5f0]'
                           }
                         `}
                       >
@@ -157,8 +157,8 @@ export default function Header({
                               flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium
                               transition-all duration-300 transform
                               ${isActive 
-                                ? 'bg-blue-100 text-blue-700 shadow-sm scale-105' 
-                                : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50 hover:scale-105'
+                                ? 'bg-[#fff5f0] text-[#ff751f] shadow-sm scale-105' 
+                                : 'text-slate-600 hover:scale-105 hover:text-[#ff751f] hover:bg-[#fff5f0]'
                               }
                             `}
                             style={{

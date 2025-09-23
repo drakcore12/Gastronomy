@@ -54,8 +54,8 @@ export function CategoryMenu({
               transition-all duration-300 ease-out
               transform hover:scale-105 hover:shadow-md
               ${isActive 
-                ? 'bg-blue-50 text-blue-600 shadow-sm scale-105' 
-                : 'text-slate-600 hover:text-slate-900 hover:bg-gradient-to-r hover:from-white hover:to-blue-50 hover:border-blue-300'
+                ? 'bg-[#fff5f0] text-[#ff751f] shadow-sm scale-105' 
+                : 'text-slate-600 hover:text-[#ff751f] hover:bg-[#fff5f0]'
               }
               ${isMobile ? 'w-full justify-start' : ''}
               ${isOpen && isMobile ? `animate-fade-in-up animation-delay-${index * 50}` : ''}

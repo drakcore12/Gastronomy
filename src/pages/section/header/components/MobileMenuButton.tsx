@@ -13,11 +13,11 @@ export function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
       onClick={onToggle}
       className={`
         md:hidden p-3 rounded-xl text-slate-600 
-        hover:text-orange-600 hover:bg-orange-50 
-        active:bg-orange-100 active:scale-95
+        hover:text-[#ff751f] hover:bg-[#fff5f0] 
+        active:bg-[#fff5f0] active:scale-95
         transition-all duration-300 transform
-        ${isOpen ? 'bg-orange-100 text-orange-600 scale-105' : 'bg-slate-50 text-slate-600 scale-100'}
-        border border-slate-200 hover:border-orange-200
+        ${isOpen ? 'bg-[#fff5f0] text-[#ff751f] scale-105' : 'bg-slate-50 text-slate-600 scale-100'}
+        border border-slate-200 hover:border-[#ff751f]/20
       `}
       aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
       aria-expanded={isOpen}

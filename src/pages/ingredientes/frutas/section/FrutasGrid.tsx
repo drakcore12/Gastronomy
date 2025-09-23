@@ -27,12 +27,35 @@ export default function FrutasGrid({ filtered }: FrutasGridProps) {
             key={fruta.id}
             className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:shadow-lg hover:ring-orange-200"
           >
-            {/* Header con gradiente */}
+            {/* Header con imagen */}
             <div className={`h-32 bg-gradient-to-br ${fruta.color} relative overflow-hidden`}>
               <div className="absolute inset-0 bg-black/10" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Apple className="h-12 w-12 text-white/90" />
-              </div>
+              
+              {/* Imagen de la fruta */}
+              {fruta.imagen ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <img 
+                    src={fruta.imagen} 
+                    alt={`Imagen de ${fruta.nombre}`}
+                    className="h-20 w-20 object-contain drop-shadow-lg"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                  {/* Fallback con icono */}
+                  <div className="hidden absolute inset-0 items-center justify-center">
+                    <Apple className="h-12 w-12 text-white/90" />
+                  </div>
+                </div>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Apple className="h-12 w-12 text-white/90" />
+                </div>
+              )}
+              
               <div className="absolute top-3 right-3">
                 <span className="rounded-full bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
                   {fruta.clasificacionCulinaria}
