@@ -158,6 +158,12 @@ export default function CutsGrid({ filtered }: CutsGridProps) {
               <span className="font-semibold text-slate-600">Primal:</span>{' '}
               {c.primal.es} <span className="text-slate-400" aria-hidden="true">/</span>{' '}
               {c.primal.en}
+              {c.primal.numero && (
+                <>
+                  <span className="text-slate-400" aria-hidden="true">/</span>{' '}
+                  {c.primal.numero}
+                </>
+              )}
             </p>
           )}
 

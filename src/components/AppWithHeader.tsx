@@ -8,6 +8,8 @@ import GastronomiaHome from '../pages/index';
 import IngredientesHome from '../pages/ingredientes';
 import Proteina from '../pages/ingredientes/proteina';
 import FrutasPage from '../pages/ingredientes/frutas';
+import HarinasPage from '../pages/ingredientes/harinas';
+import EspeciasPage from '../pages/ingredientes/especias';
 
 export default function AppWithHeader() {
   const { currentPage, navigateTo, goBack, canGoBack } = useNavigation();
@@ -24,6 +26,14 @@ export default function AppWithHeader() {
       case 'frutas':
         console.log('Renderizando página de frutas');
         return <FrutasPage />;
+      
+      case 'harinas':
+        console.log('Renderizando página de harinas');
+        return <HarinasPage />;
+      
+      case 'especias':
+        console.log('Renderizando página de especias');
+        return <EspeciasPage />;
       
       case 'ingredientes':
         console.log('Renderizando página de ingredientes');

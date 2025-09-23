@@ -6,6 +6,7 @@ export type Cut = {
     id: string;
     en: string;
     es: string;
+    numero?: string;
   };
   especie?: 'res' | 'cerdo' | 'pollo' | 'cordero' | 'pavo' | 'cabra' | 'pescado';
   metodos?: string[];

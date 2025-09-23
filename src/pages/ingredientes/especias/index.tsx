@@ -1,156 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
-  ChefHat, 
-  ArrowRight, 
-  Search, 
   Flame,
-  Star,
-  Clock,
-  Filter,
+  Map,
+  Globe,
+  ChefHat,
+  Calculator,
+  BarChart3,
   BookOpen,
-  Zap,
-  Leaf,
-  Heart
+  Eye
 } from 'lucide-react';
+
+// Importar componentes
+import { SearchSection } from './components/SearchSection';
+import { EspeciasGrid } from './components/EspeciasGrid';
+import { EscaladoCalculator, ConversionCalculator, BalancePicanteCalculator } from './components/Calculators';
+import { Comparator } from './components/Comparator';
+import { VisualGuides } from './components/VisualGuides';
+import { RecipeIntelligence } from './components/RecipeIntelligence';
+
+// Importar datos
+import { ESPECIAS, REGIONES } from './data/especias';
+import type { Especia } from './data/especias';
 
 export default function EspeciasPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedOrigin, setSelectedOrigin] = useState('all');
-
-  const especias = [
-    {
-      id: 'pimienta',
-      name: 'Pimienta Negra',
-      nameEn: 'Black Pepper',
-      origin: 'India',
-      flavor: 'Picante, Terroso',
-      uses: ['Carnes', 'Sopas', 'Salsas', 'Marinados'],
-      intensity: 4,
-      color: 'from-slate-700 to-slate-900',
-      description: 'La reina de las especias, esencial en cualquier cocina.',
-      tips: 'Moler justo antes de usar para máximo sabor'
-    },
-    {
-      id: 'comino',
-      name: 'Comino',
-      nameEn: 'Cumin',
-      origin: 'Medio Oriente',
-      flavor: 'Tierra, Caliente',
-      uses: ['Curries', 'Tacos', 'Hummus', 'Chili'],
-      intensity: 3,
-      color: 'from-amber-600 to-orange-600',
-      description: 'Esencia de la cocina mexicana e india.',
-      tips: 'Tostar ligeramente antes de moler para intensificar el sabor'
-    },
-    {
-      id: 'oregano',
-      name: 'Orégano',
-      nameEn: 'Oregano',
-      origin: 'Mediterráneo',
-      flavor: 'Herbal, Ligeramente Amargo',
-      uses: ['Pizza', 'Pasta', 'Tomates', 'Aceites'],
-      intensity: 2,
-      color: 'from-green-600 to-emerald-600',
-      description: 'Hierba mediterránea por excelencia.',
-      tips: 'Mejor sabor cuando se usa seco'
-    },
-    {
-      id: 'tomillo',
-      name: 'Tomillo',
-      nameEn: 'Thyme',
-      origin: 'Mediterráneo',
-      flavor: 'Herbal, Ligeramente Picante',
-      uses: ['Aves', 'Vegetales', 'Sopas', 'Marinados'],
-      intensity: 2,
-      color: 'from-green-500 to-teal-500',
-      description: 'Hierba versátil para carnes y vegetales.',
-      tips: 'Agregar al final de la cocción para preservar el sabor'
-    },
-    {
-      id: 'romero',
-      name: 'Romero',
-      nameEn: 'Rosemary',
-      origin: 'Mediterráneo',
-      flavor: 'Pine, Terroso',
-      uses: ['Cordero', 'Pollo', 'Papas', 'Pan'],
-      intensity: 3,
-      color: 'from-green-700 to-green-800',
-      description: 'Hierba robusta perfecta para carnes asadas.',
-      tips: 'Usar con moderación, puede dominar otros sabores'
-    },
-    {
-      id: 'laurel',
-      name: 'Hoja de Laurel',
-      nameEn: 'Bay Leaf',
-      origin: 'Mediterráneo',
-      flavor: 'Herbal, Ligeramente Amargo',
-      uses: ['Sopas', 'Estofados', 'Arroces', 'Marinados'],
-      intensity: 2,
-      color: 'from-green-600 to-green-700',
-      description: 'Esencial para sopas y estofados.',
-      tips: 'Remover antes de servir, no es comestible'
-    },
-    {
-      id: 'canela',
-      name: 'Canela',
-      nameEn: 'Cinnamon',
-      origin: 'Sri Lanka',
-      flavor: 'Dulce, Caliente',
-      uses: ['Postres', 'Café', 'Curries', 'Pan'],
-      intensity: 3,
-      color: 'from-amber-700 to-amber-800',
-      description: 'Especia dulce perfecta para postres y bebidas.',
-      tips: 'Usar en rama para infusiones, molida para hornear'
-    },
-    {
-      id: 'clavo',
-      name: 'Clavo de Olor',
-      nameEn: 'Cloves',
-      origin: 'Indonesia',
-      flavor: 'Intenso, Picante',
-      uses: ['Postres', 'Jamón', 'Mulled Wine', 'Curries'],
-      intensity: 4,
-      color: 'from-amber-800 to-amber-900',
-      description: 'Especia intensa con sabor único.',
-      tips: 'Usar con moderación, muy potente'
-    }
-  ];
-
-  const origins = ['all', 'India', 'Medio Oriente', 'Mediterráneo', 'Sri Lanka', 'Indonesia'];
-
-  const filteredEspecias = especias.filter(especia => {
-    const matchesSearch = especia.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         especia.nameEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         especia.flavor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         especia.uses.some(use => use.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesOrigin = selectedOrigin === 'all' || especia.origin === selectedOrigin;
-    
-    return matchesSearch && matchesOrigin;
+  const [filtros, setFiltros] = useState({
+    clasificacion: 'todas',
+    perfilSensorial: 'todas',
+    intensidad: 'todas',
+    region: 'todas',
+    uso: 'todas',
+    propiedad: 'todas'
   });
+
+  // Estados para herramientas profesionales
+  const [mostrarCalculadoras, setMostrarCalculadoras] = useState(false);
+  const [mostrarComparador, setMostrarComparador] = useState(false);
+  const [mostrarGuias, setMostrarGuias] = useState(false);
+  const [mostrarRecetas, setMostrarRecetas] = useState(false);
+
+  // Filtrado de especias
+  const filteredEspecias = useMemo(() => {
+    return ESPECIAS.filter(especia => {
+      // Búsqueda por texto
+      const matchesSearch = searchQuery === '' || 
+        especia.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        especia.nombreCientifico.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        especia.sabor.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        especia.usosCulinarios.some(u => u.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        especia.propiedades.some(p => p.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      // Filtros específicos
+      const matchesClasificacion = filtros.clasificacion === 'todas' || especia.clasificacionBotanica === filtros.clasificacion;
+      const matchesIntensidad = filtros.intensidad === 'todas' || especia.intensidad === filtros.intensidad;
+      const matchesRegion = filtros.region === 'todas' || especia.region === filtros.region;
+      const matchesUso = filtros.uso === 'todas' || especia.usosCulinarios.includes(filtros.uso);
+      const matchesPropiedad = filtros.propiedad === 'todas' || especia.propiedades.includes(filtros.propiedad);
+
+      // Filtro por perfil sensorial
+      const matchesPerfilSensorial = filtros.perfilSensorial === 'todas' || 
+        especia.perfilSensorial[filtros.perfilSensorial as keyof typeof especia.perfilSensorial] >= 5;
+
+      return matchesSearch && matchesClasificacion && matchesIntensidad && 
+             matchesRegion && matchesUso && matchesPropiedad && matchesPerfilSensorial;
+    });
+  }, [searchQuery, filtros]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <ChefHat className="h-8 w-8 text-orange-600" />
-              <span className="text-2xl font-bold text-slate-900">Especias</span>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="/ingredientes" className="text-slate-600 hover:text-orange-600 transition-colors">Ingredientes</a>
-              <a href="/tecnicas" className="text-slate-600 hover:text-orange-600 transition-colors">Técnicas</a>
-              <a href="/recetas" className="text-slate-600 hover:text-orange-600 transition-colors">Recetas</a>
-            </nav>
-            <button className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors">
-              Explorar
-            </button>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -160,48 +77,67 @@ export default function EspeciasPage() {
               Especias y <span className="text-orange-600">Condimentos</span>
             </h1>
             <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
-              Descubre el mundo mágico de las especias. Desde la pimienta negra hasta el clavo de olor, 
-              aprende a usar cada especia para transformar tus platos en experiencias culinarias extraordinarias.
+              Explora el mundo de las especias: aromas, sabores y usos culinarios. 
+              Desde la pimienta negra hasta el clavo de olor, aprende a usar cada especia 
+              para transformar tus platos en experiencias culinarias extraordinarias.
             </p>
             
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Buscar especias, sabores, usos..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg"
-                />
-              </div>
+            {/* CTAs por función y origen */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <button 
+                onClick={() => setMostrarGuias(true)}
+                className="flex items-center space-x-2 px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors"
+              >
+                <Map className="h-5 w-5" />
+                <span>Explorar por Origen</span>
+              </button>
+              <button 
+                onClick={() => setMostrarRecetas(true)}
+                className="flex items-center space-x-2 px-6 py-3 border-2 border-orange-600 text-orange-600 rounded-xl hover:bg-orange-50 transition-colors"
+              >
+                <ChefHat className="h-5 w-5" />
+                <span>Explorar por Función</span>
+              </button>
             </div>
 
-            {/* Origin Filter */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
-              {origins.map((origin) => (
-                <button
-                  key={origin}
-                  onClick={() => setSelectedOrigin(origin)}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    selectedOrigin === origin
-                      ? 'bg-orange-600 text-white'
-                      : 'bg-white text-slate-600 hover:bg-orange-50'
-                  }`}
+            {/* Mapa de regiones */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
+              {REGIONES.map(region => (
+                <div 
+                  key={region.id}
+                  className={`p-4 rounded-lg bg-gradient-to-r ${region.color} text-center cursor-pointer hover:scale-105 transition-transform`}
+                  onClick={() => setFiltros({...filtros, region: region.id})}
                 >
-                  {origin === 'all' ? 'Todas' : origin}
-                </button>
+                  <Globe className="h-6 w-6 mx-auto mb-2 text-white" />
+                  <div className="text-sm font-semibold text-white">{region.nombre}</div>
+                </div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Especias Grid */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+      {/* Sección de búsqueda y filtros */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <SearchSection
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filtros={filtros}
+            setFiltros={setFiltros}
+            especias={ESPECIAS}
+            onMostrarCalculadoras={() => setMostrarCalculadoras(true)}
+            onMostrarComparador={() => setMostrarComparador(true)}
+            onMostrarGuias={() => setMostrarGuias(true)}
+            onMostrarRecetas={() => setMostrarRecetas(true)}
+          />
+        </div>
+      </section>
+
+      {/* Grid de especias */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">
               Biblioteca de Especias
             </h2>
@@ -210,133 +146,83 @@ export default function EspeciasPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredEspecias.map((especia) => (
-              <div key={especia.id} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-100">
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${especia.color} flex items-center justify-center text-white mb-4`}>
-                  <Flame className="h-8 w-8" />
-                </div>
-                
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{especia.name}</h3>
-                <p className="text-slate-500 text-sm mb-3">{especia.nameEn}</p>
-                
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-slate-600">Origen:</span>
-                    <span className="text-sm text-slate-500">{especia.origin}</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-slate-600">Sabor:</span>
-                    <span className="text-sm text-slate-500">{especia.flavor}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-600">Intensidad:</span>
-                    <div className="flex space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < especia.intensity ? 'text-orange-500 fill-current' : 'text-slate-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-slate-600 text-sm mb-4">{especia.description}</p>
-                
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-slate-700 mb-2">Usos comunes:</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {especia.uses.map((use, index) => (
-                      <span
-                        key={index}
-                        className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full"
-                      >
-                        {use}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="bg-slate-50 rounded-lg p-3">
-                  <div className="flex items-start space-x-2">
-                    <Zap className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-slate-600">{especia.tips}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <EspeciasGrid 
+            especias={filteredEspecias}
+            onComparar={(especia) => {
+              setMostrarComparador(true);
+              // Aquí podrías agregar lógica para pre-seleccionar la especia
+            }}
+            onVerRecetas={(especia) => {
+              setMostrarRecetas(true);
+              // Aquí podrías agregar lógica para filtrar recetas por especia
+            }}
+          />
         </div>
       </section>
 
-      {/* Tips Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Consejos para Usar Especias
-            </h2>
-            <p className="text-xl text-slate-600">
-              Maximiza el sabor y aroma de tus especias
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6">
-                <Clock className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Tiempo de Agregado</h3>
-              <p className="text-slate-600">
-                Las especias enteras se agregan al inicio, las molidas al final para preservar su sabor.
+      {/* Herramientas profesionales */}
+      {(mostrarCalculadoras || mostrarComparador || mostrarGuias || mostrarRecetas) && (
+        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">
+                Herramientas Profesionales
+              </h2>
+              <p className="text-xl text-slate-600">
+                Calculadoras, comparadores y guías especializadas
               </p>
             </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6">
-                <Flame className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Tostar para Intensificar</h3>
-              <p className="text-slate-600">
-                Tostar especias enteras en una sartén seca antes de moler intensifica su sabor.
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6">
-                <Heart className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Almacenamiento</h3>
-              <p className="text-slate-600">
-                Guarda las especias en recipientes herméticos, lejos del calor y la luz.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            ¿Listo para experimentar con especias?
-          </h2>
-          <p className="text-xl text-orange-100 mb-8">
-            Descubre recetas que destacan el sabor de cada especia
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-orange-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-orange-50 transition-colors">
-              Ver Recetas
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/10 transition-colors">
-              Explorar Técnicas
-            </button>
+            {/* Calculadoras */}
+            {mostrarCalculadoras && (
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                  <Calculator className="h-6 w-6 mr-3 text-orange-600" />
+                  Calculadoras Prácticas
+                </h3>
+                <div className="grid lg:grid-cols-3 gap-6">
+                  <EscaladoCalculator especias={ESPECIAS} />
+                  <ConversionCalculator />
+                  <BalancePicanteCalculator />
+                </div>
+              </div>
+            )}
+
+            {/* Comparador */}
+            {mostrarComparador && (
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                  <BarChart3 className="h-6 w-6 mr-3 text-blue-600" />
+                  Comparador de Especias
+                </h3>
+                <Comparator especias={ESPECIAS} />
+              </div>
+            )}
+
+            {/* Guías visuales */}
+            {mostrarGuias && (
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                  <Eye className="h-6 w-6 mr-3 text-green-600" />
+                  Guías Visuales
+                </h3>
+                <VisualGuides />
+              </div>
+            )}
+
+            {/* Recetario inteligente */}
+            {mostrarRecetas && (
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                  <BookOpen className="h-6 w-6 mr-3 text-purple-600" />
+                  Recetario Inteligente
+                </h3>
+                <RecipeIntelligence especias={ESPECIAS} />
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

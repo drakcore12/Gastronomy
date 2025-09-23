@@ -1,7 +1,22 @@
-import React, { useEffect, useMemo, useState, useId, useRef } from 'react';
+import React, { useMemo, useId } from 'react';
 import type { CSSProperties } from 'react';
 import { HOTSPOTS_PIG, type Hotspot } from '../hotspots/hotspots';
 import { DIAGRAM_THEMES } from './theme-colors';
+import { 
+  useSvgDimensions, 
+  useHotspotState, 
+  useKeyboardEvents,
+  createRadialGradient,
+  createLinearGradient,
+  createGlowFilter,
+  createShadowFilter,
+  renderHotspotNumber,
+  renderHitArea,
+  renderBaseRing,
+  renderTooltip,
+  createRingSpinCSS,
+  renderOuterSpinRing
+} from './diagram-utils';
 
 export default function PigDiagram() {
   /** =========================
@@ -111,67 +126,21 @@ export default function PigDiagram() {
   // Clases útiles
   const DOT_CLASS_TRANSITION = 'transition';
   const RING_CLASS_BASE = 'pointer-events-none';
-  const TOOLTIP_TEXT1_CLASS = '';
-  const TOOLTIP_TEXT2_CLASS = '';
 
   /** =========================
    *  🔢 ESTADO + MEMOS
    *  ========================= */
-  const [active, setActive] = useState<string | null>(null);
-  const [hover, setHover] = useState<string | null>(null);
+  const { containerRef, svgRef, svgSize, svgOffset } = useSvgDimensions(VIEWBOX_WIDTH, VIEWBOX_HEIGHT);
+  const { active, hover, handleHotspotClick, handleHotspotHover } = useHotspotState();
   const sel = useMemo<Hotspot | null>(
     () => HOTSPOTS_PIG.find((h) => h.id === active) ?? null,
     [active]
   );
 
-  // Refs
-  const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  // Tamaño y offset (px) del SVG relativo al contenedor
-  const [svgSize, setSvgSize] = useState({ width: VIEWBOX_WIDTH, height: VIEWBOX_HEIGHT });
-  const [svgOffset, setSvgOffset] = useState({ left: 0, top: 0 });
-
-  useEffect(() => {
-    const update = () => {
-      if (!svgRef.current || !containerRef.current) return;
-      const s = svgRef.current.getBoundingClientRect();
-      const c = containerRef.current.getBoundingClientRect();
-      setSvgSize({ width: s.width, height: s.height });
-      // offset del SVG respecto al contenedor (considera paddings, bordes, etc.)
-      setSvgOffset({ left: s.left - c.left, top: s.top - c.top });
-    };
-
-    update();
-    const ro = new ResizeObserver(update);
-    if (svgRef.current) ro.observe(svgRef.current);
-    if (containerRef.current) ro.observe(containerRef.current);
-
-    // si tu layout se mueve por scroll dentro del contenedor, escuchar scroll ayuda
-    window.addEventListener('scroll', update, true);
-
-    return () => {
-      ro.disconnect();
-      window.removeEventListener('scroll', update, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === KEY_CLOSE) setActive(null);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  useKeyboardEvents(() => {}, KEY_CLOSE);
 
   // CSS embebido (para el anillo que gira si lo activas)
-  const ringSpinCSS = `
-    .ring-spin {
-      stroke-dasharray: ${OUTER_SPIN_DASHARRAY};
-      animation: dash ${OUTER_SPIN_DURATION_SEC}s linear infinite;
-    }
-    @keyframes dash { to { stroke-dashoffset: ${OUTER_SPIN_DASHOFFSET_TO}; } }
-  `;
+  const ringSpinCSS = createRingSpinCSS(OUTER_SPIN_DASHARRAY, OUTER_SPIN_DURATION_SEC, OUTER_SPIN_DASHOFFSET_TO);
 
   /** =========================
    *  🧩 RENDER
@@ -187,50 +156,25 @@ export default function PigDiagram() {
       >
         <defs>
           {/* Fondo degradado */}
-          <linearGradient id={BG_GRADIENT_ID} x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor={BG_FROM_COLOR} />
-            <stop offset="100%" stopColor={BG_TO_COLOR} />
-          </linearGradient>
+          {createLinearGradient(BG_GRADIENT_ID, BG_FROM_COLOR, BG_TO_COLOR)}
 
           {/* Punto activo (radial) */}
-          <radialGradient id={DOT_ACTIVE_GRADIENT_ID} cx="50%" cy="50%" r="60%">
-            <stop
-              offset="0%"
-              stopColor={DOT_ACTIVE_CENTER_COLOR}
-              stopOpacity={DOT_ACTIVE_CENTER_OPACITY}
-            />
-            <stop
-              offset="100%"
-              stopColor={DOT_ACTIVE_EDGE_COLOR}
-              stopOpacity={DOT_ACTIVE_EDGE_OPACITY}
-            />
-          </radialGradient>
+          {createRadialGradient(
+            DOT_ACTIVE_GRADIENT_ID,
+            DOT_ACTIVE_CENTER_COLOR,
+            DOT_ACTIVE_CENTER_OPACITY,
+            DOT_ACTIVE_EDGE_COLOR,
+            DOT_ACTIVE_EDGE_OPACITY
+          )}
 
           {/* Gradiente del anillo activo (opcional) */}
-          <linearGradient id="ringGrad" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="#f59e0b" />
-            <stop offset="100%" stopColor="#ef4444" />
-          </linearGradient>
+          {createLinearGradient("ringGrad", "#f59e0b", "#ef4444")}
 
           {/* Glow suave del punto */}
-          <filter
-            id={DOT_GLOW_SOFT_ID}
-            x="-50%"
-            y="-50%"
-            width="200%"
-            height="200%"
-          >
-            <feGaussianBlur stdDeviation={DOT_GLOW_SOFT_STDDEV} result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+          {createGlowFilter(DOT_GLOW_SOFT_ID, DOT_GLOW_SOFT_STDDEV)}
 
           {/* Sombra tooltip */}
-          <filter id="shadowLg" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.35" />
-          </filter>
+          {createShadowFilter("shadowLg")}
 
           <style>{ringSpinCSS}</style>
         </defs>
@@ -376,12 +320,6 @@ export default function PigDiagram() {
         {HOTSPOTS_PIG.map((h) => {
           const isActive = active === h.id;
           const isHover = hover === h.id;
-          const rDot = isActive
-            ? DOT_RADIUS_ACTIVE
-            : isHover
-            ? DOT_RADIUS_HOVER
-            : DOT_RADIUS;
-          const rRing = isActive ? RING_RADIUS_ACTIVE : RING_RADIUS;
 
           return (
             <g
@@ -389,66 +327,50 @@ export default function PigDiagram() {
               role="button"
               tabIndex={-1}
               aria-label={`${h.en} / ${h.es}`}
-              onMouseEnter={() => setHover(h.id)}
-              onMouseLeave={() => setHover(null)}
-              onClick={() => setActive(isActive ? null : h.id)}
+              onMouseEnter={() => handleHotspotHover(h.id)}
+              onMouseLeave={() => handleHotspotHover(null)}
+              onClick={() => handleHotspotClick(h.id)}
             >
               {/* Área clickeable invisible */}
-              <circle
-                cx={h.x}
-                cy={h.y}
-                r={HIT_RADIUS}
-                fill={HIT_FILL}
-                opacity={HIT_OPACITY}
-                style={{ pointerEvents: HIT_POINTER_EVENTS }}
-              />
+              {renderHitArea(h.x, h.y, HIT_RADIUS, HIT_FILL, HIT_OPACITY, HIT_POINTER_EVENTS)}
 
               {/* Número del hotspot con estilo del punto */}
-              <text
-                x={h.x}
-                y={h.y + 0.5}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                className={DOT_CLASS_TRANSITION}
-                fill={
-                  isActive
-                    ? `url(#${DOT_ACTIVE_GRADIENT_ID})`
-                    : DOT_FILL_INACTIVE
-                }
-                filter={`url(#${DOT_GLOW_SOFT_ID})`}
-                style={{
-                  fontSize: 'clamp(8px, 1.5vw, 10px)',
-                  fontWeight: 'bold',
-                  textShadow: isActive ? '0 0 1px rgba(0,0,0,0.6)' : '0 0 0.5px rgba(255,255,255,0.9)'
-                }}
-              >
-                {HOTSPOTS_PIG.findIndex(spot => spot.id === h.id) + 1}
-              </text>
+              {renderHotspotNumber(
+                h.id,
+                HOTSPOTS_PIG,
+                h.x,
+                h.y,
+                isActive,
+                isHover,
+                DOT_CLASS_TRANSITION,
+                DOT_FILL_INACTIVE,
+                DOT_ACTIVE_GRADIENT_ID,
+                DOT_GLOW_SOFT_ID
+              )}
 
               {/* Anillo base */}
-              <circle
-                cx={h.x}
-                cy={h.y}
-                r={rRing}
-                className={RING_CLASS_BASE}
-                fill="none"
-                stroke={RING_STROKE_BASE_COLOR}
-                strokeWidth={RING_STROKE_BASE_WIDTH}
-                opacity={isActive ? RING_OPACITY_ACTIVE : RING_OPACITY_BASE}
-              />
+              {renderBaseRing(
+                h.x,
+                h.y,
+                RING_RADIUS,
+                isActive,
+                RING_RADIUS_ACTIVE,
+                RING_CLASS_BASE,
+                RING_STROKE_BASE_COLOR,
+                RING_STROKE_BASE_WIDTH,
+                RING_OPACITY_BASE,
+                RING_OPACITY_ACTIVE
+              )}
 
               {/* (Opcional) Anillo externo giratorio */}
-              {SHOW_OUTER_SPIN_RING && isActive && (
-                <circle
-                  cx={h.x}
-                  cy={h.y}
-                  r={rRing + 6}
-                  fill="none"
-                  stroke="url(#ringGrad)"
-                  strokeWidth={OUTER_SPIN_STROKE_WIDTH}
-                  className="ring-spin"
-                  opacity={OUTER_SPIN_OPACITY}
-                />
+              {renderOuterSpinRing(
+                h.x,
+                h.y,
+                isActive,
+                SHOW_OUTER_SPIN_RING,
+                RING_RADIUS_ACTIVE,
+                OUTER_SPIN_STROKE_WIDTH,
+                OUTER_SPIN_OPACITY
               )}
             </g>
           );
@@ -456,113 +378,27 @@ export default function PigDiagram() {
       </svg>
 
       {/* === Overlay HTML: tooltip fuera del SVG y apuntando EXACTO al hotspot === */}
-      {sel && (() => {
-        // Escalas del SVG renderizado vs viewBox
-        const scaleX = svgSize.width / VIEWBOX_WIDTH;
-        const scaleY = svgSize.height / VIEWBOX_HEIGHT;
-
-        // Hotspot en px dentro del SVG renderizado
-        const anchorSvgX = sel.x * scaleX;
-        const anchorSvgY = sel.y * scaleY;
-
-        // Convertimos a coords del CONTENEDOR sumando el offset del SVG
-        const anchorLeft = svgOffset.left + anchorSvgX;
-        const anchorTop  = svgOffset.top  + anchorSvgY;
-
-        // Geometría/constantes en px
-        const ARROW_W = 12;
-        const ARROW_H = 12;
-        const BOX_W = TOOLTIP_WIDTH;
-        const BOX_H = TOOLTIP_HEIGHT;
-        const MARGIN = 8;
-
-        // Área útil para clamping = rectángulo del SVG dentro del contenedor
-        const clampLeft   = svgOffset.left + MARGIN;
-        const clampRight  = svgOffset.left + svgSize.width  - BOX_W - MARGIN;
-        const clampTop    = svgOffset.top  + MARGIN;
-        const clampBottom = svgOffset.top  + svgSize.height - BOX_H - MARGIN;
-
-        // Decidir lado (derecha si cabe dentro del propio ancho del SVG)
-        const placeRight = (anchorSvgX + ARROW_W + BOX_W + MARGIN) <= svgSize.width;
-
-        // Posición base de la caja respecto al ancla (en coords del contenedor)
-        let boxLeft = placeRight
-          ? anchorLeft + ARROW_W
-          : anchorLeft - ARROW_W - BOX_W;
-
-        let boxTop = anchorTop - BOX_H / 2;
-
-        // Clamp para mantener la caja dentro del área del SVG dibujado
-        boxLeft = Math.max(clampLeft, Math.min(boxLeft, clampRight));
-        boxTop  = Math.max(clampTop,  Math.min(boxTop,  clampBottom));
-
-        // Flecha: PUNTA exactamente en el hotspot (coords del contenedor)
-        const arrowLeft = placeRight ? anchorLeft : anchorLeft - ARROW_W;
-        const arrowTop  = anchorTop - ARROW_H / 2;
-
-        return (
-          <>
-            {/* Caja */}
-            <div
-              className="pointer-events-none absolute z-50"
-              style={{
-                left: boxLeft,
-                top: boxTop,
-                width: BOX_W,
-                height: BOX_H,
-                filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.35))',
-                willChange: 'transform',
-              }}
-            >
-              <svg width={BOX_W} height={BOX_H}>
-                <rect
-                  x={0}
-                  y={0}
-                  rx={TOOLTIP_RX}
-                  width={BOX_W}
-                  height={BOX_H}
-                  fill={TOOLTIP_BG_COLOR}
-                  opacity={TOOLTIP_BG_OPACITY}
-                />
-                <text
-                  x={TOOLTIP_TEXT1_X}
-                  y={TOOLTIP_TEXT1_Y}
-                  fill={TOOLTIP_TEXT1_FILL}
-                  fontSize={TOOLTIP_TEXT1_FONTSIZE}
-                  fontWeight={TOOLTIP_TEXT1_FONTWEIGHT}
-                  className={TOOLTIP_TEXT1_CLASS}
-                >
-                  {sel.en} / {sel.es}
-                </text>
-                <text
-                  x={TOOLTIP_TEXT2_X}
-                  y={TOOLTIP_TEXT2_Y}
-                  fill={TOOLTIP_TEXT2_FILL}
-                  fontSize={TOOLTIP_TEXT2_FONTSIZE}
-                  className={TOOLTIP_TEXT2_CLASS}
-                >
-                  Click para fijar • {KEY_CLOSE} para cerrar
-                </text>
-              </svg>
-            </div>
-
-            {/* Flecha */}
-            <svg
-              className="pointer-events-none absolute z-50"
-              width={ARROW_W}
-              height={ARROW_H}
-              style={{
-                left: arrowLeft,
-                top: arrowTop,
-                transform: placeRight ? 'scale(1,1)' : 'scale(-1,1)',
-                transformOrigin: 'center',
-              }}
-            >
-              <path d={TOOLTIP_ARROW_PATH} fill={TOOLTIP_ARROW_FILL} opacity={TOOLTIP_ARROW_OPACITY} />
-            </svg>
-          </>
-        );
-      })()}
+      {sel && renderTooltip(
+        sel,
+        svgSize,
+        svgOffset,
+        VIEWBOX_WIDTH,
+        VIEWBOX_HEIGHT,
+        TOOLTIP_WIDTH,
+        TOOLTIP_HEIGHT,
+        TOOLTIP_PADDING_X,
+        TOOLTIP_PADDING_Y,
+        TOOLTIP_RX,
+        TOOLTIP_BG_COLOR,
+        TOOLTIP_BG_OPACITY,
+        TOOLTIP_TEXT1_FILL,
+        TOOLTIP_TEXT1_FONTSIZE,
+        TOOLTIP_TEXT1_FONTWEIGHT,
+        TOOLTIP_TEXT2_FILL,
+        TOOLTIP_TEXT2_FONTSIZE,
+        TOOLTIP_ARROW_FILL,
+        KEY_CLOSE
+      )}
 
       <p className="mt-3 text-center text-xs text-white/80">
         Esquema ilustrativo. Toca un punto para ver el corte.
